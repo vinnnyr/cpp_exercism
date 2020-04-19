@@ -9,7 +9,7 @@
 
 namespace robot_simulator {
     enum struct Bearing {
-        NORTH , EAST, SOUTH, WEST
+        NORTH = 0, EAST, SOUTH, WEST
         };
     class Robot{
     public:
@@ -17,6 +17,8 @@ namespace robot_simulator {
         Bearing get_bearing() const;
         Robot(); // default
         Robot(std::pair <int,int> position, Bearing bearing);
+        void turn_right();
+        void turn_left();
     private:
         std::pair <int,int> position;
         Bearing bearing;
