@@ -1,0 +1,7 @@
+.vscode
+.exercism
+build/
+test/
+CMakeLists.txt
+README.md
+CMakeFiles/*
