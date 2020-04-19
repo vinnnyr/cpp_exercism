@@ -1,5 +1,6 @@
 #if !defined(ROBOT_SIMULATOR_H)
 #define ROBOT_SIMULATOR_H
+
 // #define NORTH int 0
 // #define EAST int 90
 // #define SOUTH int 180
@@ -19,6 +20,7 @@ namespace robot_simulator {
         Robot(std::pair <int,int> position, Bearing bearing);
         void turn_right();
         void turn_left();
+        void advance();
     private:
         std::pair <int,int> position;
         Bearing bearing;

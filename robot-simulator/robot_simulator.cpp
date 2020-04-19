@@ -33,6 +33,30 @@ void Robot::turn_left(){
         case Bearing::WEST : bearing = Bearing::SOUTH; break;
     }
 }
+void Robot::advance(){
+    // Coordinate system is 
+    //          (+x)
+    //          ^ 
+    //          | 
+    //          o ---> (+y)
+    switch(bearing)
+    {
+    case Bearing::NORTH:
+        position.second = position.second + 1; //y + 1
+        break;
+    case Bearing::EAST:
+        position.first = position.first + 1; //x+1 
+        break;
+    case Bearing::WEST:
+        position.first = position.first - 1; //x-1
+        break;
+    case Bearing::SOUTH:
+        position.second = position.second - 1; //y - 1
+        break;
+    }
+
+    
+}
 
 std::pair <int,int> Robot::get_position() const {
     return position;
