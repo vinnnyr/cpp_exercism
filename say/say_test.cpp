@@ -1,6 +1,6 @@
 #include "say.h"
 #include "test/catch.hpp"
-
+#define EXERCISM_RUN_ALL_TESTS
 TEST_CASE("zero")
 {
     REQUIRE("zero" == say::in_english(0ULL));
@@ -41,7 +41,7 @@ TEST_CASE("one_hundred_twenty_three")
 {
     REQUIRE("one hundred twenty-three" == say::in_english(123ULL));
 }
-#if defined(EXERCISM_RUN_ALL_TESTS)
+
 TEST_CASE("one_thousand")
 {
     REQUIRE("one thousand" == say::in_english(1000ULL));
@@ -51,7 +51,7 @@ TEST_CASE("one_thousand_two_hundred_thirty_four")
 {
     REQUIRE("one thousand two hundred thirty-four" == say::in_english(1234ULL));
 }
-
+#if defined(EXERCISM_RUN_ALL_TESTS)
 TEST_CASE("one_million")
 {
     REQUIRE("one million" == say::in_english(1000ULL*1000ULL));

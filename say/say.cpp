@@ -2,30 +2,62 @@
 
 namespace say {
 std::string in_english(unsigned long input){
-    if(input >= 100){
-        unsigned long nHundreds = std::floor(input/100);
-        unsigned long remainderHundreds = input % 100;
-        if(remainderHundreds==0){
-            return(zero_to_ninetynine(nHundreds) +" hundred");
-        }
-        else{
-            return(zero_to_ninetynine(nHundreds) +" hundred " + zero_to_ninetynine(remainderHundreds));
-        }
-        
+    if (input==0){
+        return "zero"; //zero is a special case
     }
-    else{
-        return zero_to_ninetynine(input);
+    else if (input >= TRILLION){
+        throw std::domain_error("ERROR"); //per readme requirements
+        return {};
+    }
+    else if (input > 0){
+        return processNumbers(input); //helper function to do the math, and to ensure we don't get caught in the "zero" case
+    }
+    else {
+        throw std::domain_error("ERROR"); // if other weird things happen
+        return {};
     }
 }
-std::string zero_to_ninetynine(unsigned long input){
-    if (input < 10)
+std::string processNumbers(unsigned long input){
+    if(input >= 1000000000){
+        return powersOfTen(input,1000000000,"billion");
+        }
+    if(input >= 1000000){
+        return powersOfTen(input,1000000,"million");
+        }
+    else if(input >= 1000){
+        return powersOfTen(input,1000,"thousand");
+        }
+    else if(input >= 100){
+        return powersOfTen(input,100,"hundred");
+        }
+    else if (input< 100){
+        return(getHundredAndUnder(input));
+    }
+    else{
+        throw std::domain_error("ERROR");
+        return {};//not sure how you would get here
+    }
+}
+std::string powersOfTen(unsigned long input,unsigned long ten,std::string tenString){
+    // This takes in the number, the power of ten, and the english representation of that power of ten and then starts the recursion
+    // Example powersOfTen(1450,1000,"thousand") -- we want to break up the number 1450 into groups of 1000s
+    unsigned long nTens = std::floor(input/ten);
+    unsigned long remainderTens = input % ten;
+    std::string space = "";
+    if(remainderTens!=0){ //if there is a remainder, then this space is needed.
+        space = " ";
+    }
+    return processNumbers(nTens) +" "+tenString+ space +processNumbers(remainderTens);
+}
+std::string getHundredAndUnder(unsigned long input){
+    if (input < 10) 
     {
         return numbers_under_ten(input);
     }
-    else if (input % 10 == 0){
+    else if (input % 10 == 0){ //then this is a nice even number
         return div_by_ten(input);
     }
-    else if ((10 < input) && (input < 20))
+    else if ((10 < input) && (input < 20)) //the teen numbers in english are odd
     {
         return teen_numbers(input);
     }
@@ -42,7 +74,7 @@ std::string numbers_under_ten(unsigned long input){
     switch(input)
     {
         case(0):
-            return("zero");
+            return {}; // the real string zero is handled somewhere else
             break;
         case(1):
             return("one");
@@ -72,6 +104,7 @@ std::string numbers_under_ten(unsigned long input){
             return("nine");
             break;
         default:
+            throw std::domain_error("ERROR");
             return("ERROR"); //this shouldnt be a reached state
             break;
     }
@@ -107,6 +140,7 @@ std::string teen_numbers(unsigned long input){
         return("nineteen");
         break;
     default:
+        throw std::domain_error("ERROR");
         return("ERROR");
         break;
     }
@@ -124,7 +158,7 @@ std::string div_by_ten(unsigned long input){
         return ("thirty");
         break;
     case 40:
-        return ("fourty");
+        return ("forty");
         break;
     case 50:
         return ("fifty");
@@ -141,7 +175,11 @@ std::string div_by_ten(unsigned long input){
     case 90:
         return ("ninety");
         break;
+    case 100:
+        return("hundred");
+        break;
     default:
+        throw std::domain_error("ERROR");
         return("ERROR");
         break;
     }
