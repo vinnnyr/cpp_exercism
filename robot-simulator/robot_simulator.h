@@ -5,7 +5,7 @@
 // #define EAST int 90
 // #define SOUTH int 180
 // #define WEST int 270
-
+#include <string>
 #include <utility>
 
 namespace robot_simulator {
@@ -21,6 +21,7 @@ namespace robot_simulator {
         void turn_right();
         void turn_left();
         void advance();
+        void execute_sequence(std::string seq);
     private:
         std::pair <int,int> position;
         Bearing bearing;

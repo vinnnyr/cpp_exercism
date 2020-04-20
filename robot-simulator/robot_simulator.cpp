@@ -54,8 +54,24 @@ void Robot::advance(){
         position.second = position.second - 1; //y - 1
         break;
     }
-
-    
+}
+void Robot::execute_sequence(std::string seq){
+    for(unsigned int i = 0; i < seq.length(); i++){
+        switch (seq[i])
+        {
+        case 'R':
+            turn_right();
+            break;
+        case 'L':
+            turn_left();
+            break;
+        case 'A':
+            advance();
+            break;
+        default:
+            break;
+        }
+    }
 }
 
 std::pair <int,int> Robot::get_position() const {
